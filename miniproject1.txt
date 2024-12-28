@@ -1,0 +1,116 @@
+#include <stdio.h>
+
+#define MAX_SEATS 10
+
+// Function prototypes
+void bookSeat(int seats[]);
+void cancelReservation(int seats[]);
+void displaySeats(int seats[]);
+void generateTicket(int seats[]);
+
+int main() {
+    int seats[MAX_SEATS] = {0}; // 0 means available, 1 means reserved
+    int choice;
+
+    while (1) {
+        printf("\n--- Bus Reservation System ---\n");
+        printf("1. Book a Seat\n");
+        printf("2. Cancel a Reservation\n");
+        printf("3. Display Seat Availability\n");
+        printf("4. Generate Ticket\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                bookSeat(seats);
+                break;
+            case 2:
+                cancelReservation(seats);
+                break;
+            case 3:
+                displaySeats(seats);
+                break;
+            case 4:
+                generateTicket(seats);
+                break;
+            case 5:
+                printf("Exiting the program.\n");
+                return 0;
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+
+// Function to book a seat
+void bookSeat(int seats[]) {
+    int seatNumber;
+    printf("Enter seat number to book (1 to %d): ", MAX_SEATS);
+    scanf("%d", &seatNumber);
+
+    if (seatNumber < 1 || seatNumber > MAX_SEATS) {
+        printf("Invalid seat number.\n");
+        return;
+    }
+
+    if (seats[seatNumber - 1] == 1) {
+        printf("Seat %d is already booked.\n", seatNumber);
+    } else {
+        seats[seatNumber - 1] = 1;
+        printf("Seat %d successfully booked.\n", seatNumber);
+    }
+}
+
+// Function to cancel a reservation
+void cancelReservation(int seats[]) {
+    int seatNumber;
+    printf("Enter seat number to cancel (1 to %d): ", MAX_SEATS);
+    scanf("%d", &seatNumber);
+
+    if (seatNumber < 1 || seatNumber > MAX_SEATS) {
+        printf("Invalid seat number.\n");
+        return;
+    }
+
+    if (seats[seatNumber - 1] == 0) {
+        printf("Seat %d is not reserved.\n", seatNumber);
+    } else {
+        seats[seatNumber - 1] = 0;
+        printf("Reservation for seat %d cancelled.\n", seatNumber);
+    }
+}
+
+// Function to display seat availability
+void displaySeats(int seats[]) {
+    printf("\n--- Seat Availability ---\n");
+    for (int i = 0; i < MAX_SEATS; i++) {
+        if (seats[i] == 0)
+            printf("Seat %d: Available\n", i + 1);
+        else
+            printf("Seat %d: Reserved\n", i + 1);
+    }
+}
+
+// Function to generate a ticket
+void generateTicket(int seats[]) {
+    int seatNumber;
+    printf("Enter seat number to generate ticket (1 to %d): ", MAX_SEATS);
+    scanf("%d", &seatNumber);
+
+    if (seatNumber < 1 || seatNumber > MAX_SEATS) {
+        printf("Invalid seat number.\n");
+        return;
+    }
+
+    if (seats[seatNumber - 1] == 0) {
+        printf("Seat %d is not reserved. Cannot generate a ticket.\n", seatNumber);
+    } else {
+        printf("\n--- Ticket ---\n");
+        printf("Seat Number: %d\n", seatNumber);
+        printf("Ticket Generated Successfully!\n");
+    }
+} 
